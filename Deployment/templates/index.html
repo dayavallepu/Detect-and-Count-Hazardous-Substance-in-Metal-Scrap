@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 30px;
+            background: #e6f2ff;
+            /* Light blue background */
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.10);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .logo-container img {
+            height: 70px;
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 700;
+            color: #ff9800;
+        }
+
+        .hazard-icon {
+            vertical-align: middle;
+            margin-right: 10px;
+            width: 38px;
+            height: 38px;
+        }
+
+        .desc-box {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+            /* Light sky blue */
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+        }
+
+        .desc-box p {
+            font-size: 1.2rem;
+            color: #444;
+            text-align: center;
+            margin: 0;
+        }
+
+        .card-btns-container {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card-btn {
+            width: 340px;
+            height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 32px 20px 20px 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            box-shadow: 0 8px 32px rgba(39, 174, 96, 0.13);
+            cursor: pointer;
+            transition: transform 0.22s, box-shadow 0.22s, background 0.22s;
+            border: none;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .card-btn:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 16px 48px rgba(39, 174, 96, 0.18);
+            background: linear-gradient(135deg, #e0eafc 0%, #a1c4fd 100%);
+        }
+
+        .card-btn .card-img {
+            width: 110px;
+            height: 110px;
+            margin-bottom: 18px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-btn .card-img img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .card-btn .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .card-btn .card-desc {
+            font-size: 1.08rem;
+            color: #444;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        /* Unique backgrounds for each card */
+        .card-btn.image {
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffe29f 100%);
+        }
+
+        .card-btn.image:hover {
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+        }
+
+        .card-btn.video {
+            background: linear-gradient(135deg, #f5f7fa 0%, #b7ffea 100%);
+        }
+
+        .card-btn.video:hover {
+            background: linear-gradient(135deg, #b7ffea 0%, #43cea2 100%);
+        }
+
+        .card-btn.live {
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffd6e0 100%);
+        }
+
+        .card-btn.live:hover {
+            background: linear-gradient(135deg, #ffd6e0 0%, #ff6a88 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='company_logo.png') }}" alt="Company Logo">
+        </div>
+        <h1>
+            <img src="https://img.icons8.com/color/48/000000/hazardous-materials.png" alt="Hazard" class="hazard-icon"
+                onerror="this.style.display='none';this.insertAdjacentText('beforebegin','🤖');">
+            Detect and Count Hazardous Substances in Metal Scrap 🤖
+        </h1>
+        <div class="desc-box">
+            <p>Welcome to the detection platform. Choose an option below to start detecting and analyzing hazardous
+                substances in metal scrap.</p>
+        </div>
+        <div class="card-btns-container">
+            <a href="{{ url_for('image_detect_page') }}" class="card-btn image">
+                <div class="card-img">
+                    <img src="{{ url_for('static', filename='img/image_card.png') }}" alt="Image Detection"
+                        onerror="this.onerror=null;this.src='https://img.icons8.com/color/96/000000/image.png';">
+                </div>
+                <div class="card-title">Image Detection</div>
+                <div class="card-desc">Upload an image and instantly detect and count objects with beautiful analytics.
+                </div>
+            </a>
+            <a href="{{ url_for('video_detect_page') }}" class="card-btn video">
+                <div class="card-img">
+                    <img src="{{ url_for('static', filename='img/video_card.png') }}" alt="Video Detection"
+                        onerror="this.onerror=null;this.src='https://img.icons8.com/color/96/000000/video.png';">
+                </div>
+                <div class="card-title">Video Detection</div>
+                <div class="card-desc">Analyze videos frame by frame to detect and count objects throughout the video.
+                </div>
+            </a>
+            <a href="{{ url_for('live_page') }}" class="card-btn live">
+                <div class="card-img">
+                    <img src="{{ url_for('static', filename='img/live_card.png') }}" alt="Live Detection"
+                        onerror="this.onerror=null;this.src='https://img.icons8.com/color/96/000000/camera--v2.png';">
+                </div>
+                <div class="card-title">Live Detection</div>
+                <div class="card-desc">Experience real-time object detection and analytics directly from your webcam.
+                </div>
+            </a>
+        </div>
+        <div class="footer-powered"
+            style="margin-top:40px; text-align:center; color:#888; font-size:1.05rem; letter-spacing:1px; opacity:0.85;">
+            Powered by <span style="color:#27ae60;font-weight:600;">YOLO11</span> and <span
+                style="color:#2196f3;font-weight:600;">Flask</span> | &copy; 2025 <span
+                style="color:#ff9800;font-weight:600;">AISPRY</span>
+        </div>
+    </div>
+</body>
+
+</html>

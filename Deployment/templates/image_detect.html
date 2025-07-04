@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Image Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 40px 36px;
+            background: #e6f2ff;
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.13);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .logo-container img {
+            height: 100px;
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        .banner-img {
+            width: 80px;
+            max-width: 80px;
+            display: block;
+            margin: 0 auto 18px auto;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.10);
+        }
+
+        h2 {
+            text-align: center;
+            color: #27ae60;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .desc-box {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+            border-radius: 16px;
+            padding: 16px 22px;
+            margin: 0 auto 28px auto;
+            max-width: 700px;
+            font-size: 1.08rem;
+            color: #31708f;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        .detect-btn {
+            background: linear-gradient(90deg, #27ae60 0%, #43cea2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 8px 8px 0 0;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(67, 206, 162, 0.10);
+        }
+
+        .detect-btn:hover {
+            background: linear-gradient(90deg, #43cea2 0%, #27ae60 100%);
+        }
+
+        .result-card {
+            background: #f0f7ff;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(67, 206, 162, 0.08);
+            padding: 24px 18px;
+            margin-top: 30px;
+        }
+
+        .result-card h3 {
+            color: #27ae60;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-card img {
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+            margin-bottom: 12px;
+            max-width: 90%;
+            width: 500px;
+            min-width: 250px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            font-size: 1.08rem;
+            margin-bottom: 4px;
+        }
+
+        .chart-container {
+            margin-top: 18px;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            margin-top: 18px;
+            display: block;
+            width: 100%;
+        }
+
+        .footer-powered {
+            margin-top: 40px;
+            text-align: center;
+            color: #888;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+            opacity: 0.85;
+        }
+
+        .footer-powered span {
+            color: #27ae60;
+            font-weight: 600;
+        }
+    </style>
+    <script>
+        function downloadPlots() {
+            // Download Pie Chart
+            if (document.getElementById('pie-chart')) {
+                Plotly.downloadImage('pie-chart', { format: 'png', filename: 'detection_pie_chart' });
+            }
+            // Download Bar Chart
+            if (document.getElementById('bar-chart')) {
+                Plotly.downloadImage('bar-chart', { format: 'png', filename: 'detection_bar_chart' });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='company_logo.png') }}" alt="Company Logo">
+        </div>
+        <img src="{{ url_for('static', filename='img/image_banner.png') }}" alt="Image Detection" class="banner-img"
+            onerror="this.onerror=null;this.src='https://img.icons8.com/color/80/000000/image.png';">
+        <h2><i class="fas fa-image"></i> Image Detection</h2>
+        <div class="desc-box">
+            Effortlessly detect and count hazardous substances in your metal scrap images. Upload an image to get
+            instant detection results, object counts, and insightful visual analytics.
+        </div>
+        <form action="{{ url_for('image_detect') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit" class="detect-btn"><i class="fas fa-search"></i> Detect</button>
+        </form>
+        {% if result %}
+        <div class="result-card">
+            <h3><i class="fas fa-upload"></i> Input Image</h3>
+            <img src="{{ original_file }}">
+            <h3><i class="fas fa-microscope"></i> Detection Output</h3>
+            <img src="{{ detection_file }}" id="detection-output-img">
+            <h3><i class="fas fa-list-ol"></i> Object Counts</h3>
+            <ul>
+                {% for item in result %}
+                <li><b>{{ item.class_name }}</b>: {{ item.count }}</li>
+                {% endfor %}
+            </ul>
+            <div class="chart-container">
+                {{ chart|safe }}
+                {{ bar_chart|safe }}
+            </div>
+            <button onclick="window.print()" class="detect-btn"><i class="fas fa-print"></i> Print</button>
+            <button type="button" class="detect-btn" onclick="downloadPlots()">
+                <i class="fas fa-download"></i> Download Result
+            </button>
+            <a href="{{ detection_file }}" download class="detect-btn">
+                <i class="fas fa-download"></i> Download Image
+            </a>
+        </div>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="back-btn"><button type="button" class="detect-btn"><i
+                    class="fas fa-arrow-left"></i> Back</button></a>
+        <div class="footer-powered">
+            Powered by <span>YOLO11</span> and <span style="color:#2196f3;font-weight:600;">Flask</span> | &copy; 2025
+            <span style="color:#ff9800;font-weight:600;">AISPRY</span>
+        </div>
+    </div>
+</body>
+
+</html>

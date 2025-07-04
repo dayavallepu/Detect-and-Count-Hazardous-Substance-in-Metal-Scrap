@@ -1,0 +1,7 @@
+ultralytics
+pycocotools
+torch
+opencv-python
+matplotlib
+pandas
+pyyaml
