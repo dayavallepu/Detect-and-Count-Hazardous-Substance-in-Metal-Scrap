@@ -111,6 +111,65 @@ See [requirements.txt](requirements.txt) for all dependencies.
 
 ---
 
+## How to Run
+
+Follow these steps to run the hazardous substance detection project:
+
+1. **Clone the repository**
+    ```sh
+    git clone https://github.com/yourusername/your-repo-name.git
+    cd your-repo-name
+    ```
+
+2. **Create and activate a virtual environment (recommended)**
+    ```sh
+    python -m venv venv
+    venv\Scripts\activate     # Windows
+    # source venv/bin/activate  # Linux/Mac
+    ```
+
+3. **Install dependencies**
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+4. **Convert annotations (if needed)**
+    - Use the provided notebook or scripts to convert COCO JSON annotations to YOLO format.
+
+5. **Set up the dataset YAML**
+    - Update or create `dataset.yaml` with your class names and paths.
+
+6. **Train the model**
+    ```sh
+    python train.py --img 640 --batch 16 --epochs 50 --data dataset.yaml --weights yolov9s.pt
+    ```
+    *(Adjust the image size, batch size, and epochs as needed.)*
+
+7. **Validate / Test the model**
+    ```sh
+    python val.py --data dataset.yaml --weights runs/train/exp/weights/best.pt
+    ```
+
+8. **Run inference**
+    ```sh
+    python detect.py --source path/to/test/images --weights runs/train/exp/weights/best.pt --conf 0.5
+    ```
+
+9. **(Optional) Run Flask deployment**
+    ```sh
+    cd app
+    python app.py
+    ```
+    - Access the web interface at [http://localhost:5000](http://localhost:5000).
+
+---
+
+**Note:**
+- Adjust file paths in scripts as per your local directory structure.
+- Make sure to update your `dataset.yaml` correctly.
+- For Colab usage, mount Google Drive as shown in the earlier section.
+
+  
 ## Acknowledgements
 
 - [Ultralytics YOLO](https://github.com/ultralytics/ultralytics)
